@@ -1,0 +1,72 @@
+
+<html lang="en" >
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+
+	<script src="ngDraggable.js"></script>
+<script type="text/javascript" src="yottaApp.js"></script>
+</head>
+ <style>
+ [ng-drop].drag-enter{
+        border:solid 2px grey;
+        background-color:#f2f2f2;
+        cursor: hand;
+    }
+     [ng-drag].dragging{
+        opacity: 0.5;
+        cursor:hand;
+    }
+
+</style>
+<body ng-app="yottaApp" ng-controller="yottaController">
+
+<div layout="row"  layout-fill layout-padding layout-wrap>
+  <md-whiteframe class="md-whiteframe-3dp" style="background:#A9A9A9" flex="20">
+
+<div style="background:#ededed;text-align:center" class="md-body" layout-padding >List Of Items</div>
+<md-list>
+<md-whiteframe class="md-whiteframe-1dp"  style="background:#ffffff" layout-padding  ng-repeat="option in dataOptions " ng-drag="true" ng-drag-data="{itemId:option.itemId,imagePath:option.imagePath,name:option.name,isCanvas:false}"  layout="column"  
+style="overflow:hidden;cursor:hand;" >
+{{option.name}}
+</md-whiteframe>
+<md-divider  class="divider_line"></md-divider>
+</md-list>
+  </md-whiteframe>
+  <md-whiteframe class="md-whiteframe-3dp" flex="auto"  ng-drop="true"
+ng-drop-success="dropOnCanvas($data,$event)" class="  background: rgba(0, 255, 0, 0.5);
+
+  position: relative;">
+
+      <span class="md-title">Drop area</span>
+<div >
+						
+      <div ng-repeat="opt in droppedOptions track by opt.id">
+
+
+
+ <img ng-drag="true" ng-drag-data="{option:opt,isCanvas:true}"  ng-src="{{opt.imagePath}}" style="cursor: hand;position:relative;left:{{opt.X}};top:{{opt.Y}}"ng-click="showDetails(opt)" width=60 height=60>
+				
+          </div>      
+      </div>
+    </md-whiteframe>
+  
+<md-whiteframe class="md-whiteframe-3dp" flex="15" style="background:#A9A9A9" ng-if="showRightTab==true">
+    
+	<div  md-whiteframe="3" style="background:#ffffff;width:auto;height:auto" layout-padding>
+	<div class="md-body" style="width:100%:border:1px solid;"layout-padding>
+	ID : {{clickedOption.id}}<br>
+	Item ID : {{clickedOption.itemId}}<br>
+	Name : {{clickedOption.name}}<br>
+	Icon :<br><img ng-src="{{clickedOption.imagePath}}" width=150	 height=150>
+ </div></div>
+</md-whiteframe>
+</div></div>
+</body>
+</html>
